@@ -4,6 +4,7 @@ set number
 set noswapfile
 set scrolloff=7
 
+set clipboard+=unnamedplus " for using linux clipboard by default
 
 set expandtab
 set autoindent
@@ -12,10 +13,10 @@ filetype indent on      " load filetype-specific indent files
 
 " for tabulation
 set smartindent
-set tabstop=2
+set tabstop=4 "2
 set expandtab
-set shiftwidth=2
-set softtabstop=2
+set shiftwidth=4 "2
+set softtabstop=4 "2
 
 inoremap jk <esc>
 
@@ -29,7 +30,6 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'L3MON4D3/LuaSnip'
-
 
 " color schemas
 Plug 'morhetz/gruvbox'  " colorscheme gruvbox
@@ -83,18 +83,42 @@ let g:prettier#quickfix_enabled = 0
 
 " Turn on vim-sneak
 let g:sneak#label = 1
-
+"
+"
+"
+"
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+"
+"
+"
+"
+set background=light
 colorscheme gruvbox
 "colorscheme OceanicNext
 "let g:material_terminal_italics = 1
 " variants: default, palenight, ocean, lighter, darker, default-community,
 "           palenight-community, ocean-community, lighter-community,
 "           darker-community
-"let g:material_theme_style = 'darker'
+"let g:material_theme_style = 'lighter'
 "colorscheme material
-if (has('termguicolors'))
-  set termguicolors
-endif
+
+"if (has('termguicolors'))
+ " set termguicolors
+"endif
 
 " variants: mirage, dark, dark
 "let ayucolor="mirage"
@@ -333,7 +357,7 @@ autocmd FileType python imap <buffer> <C-h> <esc>:w<CR>:exec '!python3.10' shell
 autocmd FileType c map <buffer> <C-h> :w<CR>:exec '!gcc' shellescape(@%, 1) '-o out; ./out'<CR>
 autocmd FileType c imap <buffer> <C-h> <esc>:w<CR>:exec '!gcc' shellescape(@%, 1) '-o out; ./out'<CR>
 
-autocmd FileType python set colorcolumn=80
+"autocmd FileType python set colorcolumn=80
 
 set relativenumber
 set rnu
